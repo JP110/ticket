@@ -1,16 +1,32 @@
+
+
 <script setup>
 import {ref} from 'vue'
+import {computed} from 'vue'
 const formData = ref ( {
   email: '',
   category: '',
   description: '',
   priority: '',
 })
-
+const isEmailValid =  computed(() => {
+  const regMail = new RegExp(/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/);
+  return regMail.test(formData.value.email)
+})
+const isValiddescription =  computed(() => {
+  return (formData.value.description !== "")
+})
+const isFormValid = computed (()=> {
+  return !(isEmailValid.value && isValiddescription.value) 
+})
 // handle sign out
-const submitForm = function (e) { console.log(formData.value.email)
+const submitForm = function (e) { 
+ // const isValidEmail = this.validateEmail(e.target.value)
+
+  console.log(formData.value.email)
 // submit sign out here
 }
+
 </script>
 
 <template>
@@ -42,7 +58,7 @@ const submitForm = function (e) { console.log(formData.value.email)
         <option>Haute</option>
     </select>
     </div>
-   <button  class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">Valider</button>
+   <button  :disabled='isFormValid' class="disabled:bg-blue-200 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">Valider</button>
 </form>
   
 </template>
