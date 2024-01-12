@@ -1,3 +1,22 @@
+<script setup>
+import { ref, onMounted } from 'vue'
+import { CATEGORIES, PRIORITIES } from '../constants'
+
+const props = defineProps({
+   ticketId: {
+      type: Number,
+      required: true,
+   },
+})
+
+const ticket = ref({})
+
+onMounted(async () => {
+   const response = await fetch(`/api/ticket/${props.ticketId}`)
+   ticket.value = await response.json()
+})
+</script>
+
 <template>
     <div class="max-w-md mx-auto mt-8">
  
@@ -19,21 +38,3 @@
     </div>
  </template>
  
- <script setup>
- import { ref, onMounted } from 'vue'
- import { CATEGORIES, PRIORITIES } from '../constants'
- 
- const props = defineProps({
-    ticketId: {
-       type: Number,
-       required: true,
-    },
- })
- 
- const ticket = ref({})
- 
- onMounted(async () => {
-    const response = await fetch(`/api/ticket/${props.ticketId}`)
-    ticket.value = await response.json()
- })
- </script>
