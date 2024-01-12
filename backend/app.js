@@ -23,7 +23,7 @@ app.get('/api/ticket', async (req, res) => {
 
  app.post("/api/ticket", async function(req, res) {
     const body = req.body
-    await prisma.ticket.create({
+   const ticket=  await prisma.ticket.create({
         data: { 
             email: body.email,
             category: body.category,
@@ -31,7 +31,17 @@ app.get('/api/ticket', async (req, res) => {
             priority: body.priority,
         },
       })
+      res.send(ticket)
 })
+
+app.get('/api/ticket/:id', async (req, res) => {
+    const allTickets = await prisma.ticket.findUnique({
+        where: {
+          id: parseInt(req.params.id),
+        },
+      })
+    res.send(allTickets)
+ });
 
 
 
