@@ -61,3 +61,26 @@ export async function asyncTickets(ticketId)
         return ticket.value
     }    
 }
+
+
+
+// export const visibleTickets = computed(() => (categories, priorities) => {
+//    allTickets.filter(ticket => categories.has(ticket.category))
+//    .filter(ticket => priorities.has(ticket.priority))
+//  })
+export const ticketOfId = computed(() => (id) => {
+    const ticket = id2ticket.value[id]
+    if (ticket) return ticket
+    fetch(`/api/ticket/${id}`).then(response => response.json()).then(ticket => {
+       id2ticket.value[ticket.id] = ticket
+    })
+ })
+
+
+export const visibleTickets = computed(() => (filteredPriorities, filteredCategories) => {
+    const listTicketsfiltered = allTickets.value
+    .filter(ticket => filteredPriorities.has(ticket.priority))
+    .filter(ticket => filteredCategories.has(ticket.category))
+    return listTicketsfiltered
+ })
+ 
