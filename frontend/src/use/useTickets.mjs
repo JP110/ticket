@@ -1,7 +1,8 @@
 
 import { computed, ref } from 'vue'
-const id2ticket = ref ({})
-const ticketsloaded = ref (false)
+import { useSessionStorage } from '@vueuse/core'
+const id2ticket = useSessionStorage('id2ticket', {})
+const ticketsloaded = useSessionStorage('ticket-list-complete', false)
 
 
 export const allTickets = 
