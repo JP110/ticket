@@ -1,8 +1,10 @@
 
 import { computed, ref } from 'vue'
 import { useSessionStorage } from '@vueuse/core'
+import VueCookies from 'vue-cookies'
+import router from '../router';
 const id2ticket = useSessionStorage('id2ticket', {})
-const ticketsloaded = useSessionStorage('ticket-list-complete', false)
+export const ticketsloaded = useSessionStorage('ticket-list-complete', false)
 
 
 export const allTickets = 
@@ -11,7 +13,7 @@ computed ( () => {
      {
        return Object.values(id2ticket.value)
      }
-
+         id2ticket.value ={}
          fetch('/api/ticket', {
             method: 'GET',
             headers: {
@@ -84,3 +86,10 @@ export const visibleTickets = computed(() => (filteredPriorities, filteredCatego
     return listTicketsfiltered
  })
  
+ export const logout = () => {
+    router.push(`/signin`)
+    sessionStorage.clear()
+    
+    VueCookies.remove("access_token") 
+    // = 'access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+ }

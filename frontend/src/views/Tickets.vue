@@ -20,6 +20,10 @@
             <TicketCard @click="handleClick(ticket.id)" :ticketId=ticket.id :selected="ticket.id == selectedTicketId"></TicketCard>
           </template>
          </div>
+
+         <div class="flex justify-end">
+            <button @click="logout" class="flex w-fit bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline disabled:bg-blue-200 absolute right-0 m-4">Log Out</button>
+     </div>
          <router-view></router-view>
     </div>
 
@@ -30,10 +34,16 @@
 import TicketCard from '../components/TicketCard.vue';
 import router from '../router';
 import { useRoute } from 'vue-router'
-import { visibleTickets } from '../use/useTickets.mjs'
+import {visibleTickets, logout } from '../use/useTickets.mjs'
+
  const route = useRoute()
 const selectedTicketId = ref(route.params.ticketId)
-
+// const logout = () => {
+//    document.cookie = 'access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+//     // Effacer le localStorage
+//   sessionStorage.clear();
+//   router.push(`/signin`)
+// }
  const handleClick = (id) => {
    selectedTicketId.value = id
   router.push(`/tickets/${id}`)

@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Myform from "/src/views/Myform.vue"
 import Recap from "/src/views/Recap.vue"
 import TicketDetail from "/src/components/TicketDetail.vue"
+import Signin from "/src/views/Signin.vue"
 const routes = [
    {
       path: '/',
@@ -25,6 +26,10 @@ const routes = [
       path: '/recap/:ticketId',
       component: Recap,
       props: (route) => ({ ticketId: parseInt(route.params.ticketId) })
+   },
+   {
+      path: '/signin',
+      component: Signin,
    },
    {
       path: "/:catchAll(.*)",
